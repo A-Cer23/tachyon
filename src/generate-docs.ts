@@ -1,10 +1,12 @@
 import { TObject, TSchema, TUnion } from "@sinclair/typebox";
 import fs from "fs";
 import { objectKeys, titleCase } from "jaz-ts-utils";
+// @ts-ignore
 import { JSONSchemaFaker } from "json-schema-faker";
 import { compile } from "json-schema-to-typescript";
 
 import { CommandConfig, TachyonConfig } from "@/generate-json-schemas";
+import { stringifyJsonSchema } from "@/json-schema-format";
 
 JSONSchemaFaker.option("useExamplesValue", true);
 JSONSchemaFaker.option("useDefaultValue", true);
@@ -164,7 +166,7 @@ export async function generateCommandMarkdown(
     markdown += `<details>
 <summary>JSONSchema</summary>\n
 \`\`\`json
-${JSON.stringify(schema, null, 4)}
+${await stringifyJsonSchema(schema)}
 \`\`\`\n</details>\n\n`;
 
     const failedReasons: string[] = [];

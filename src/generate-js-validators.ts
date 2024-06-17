@@ -6,19 +6,10 @@ import path from "node:path";
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import addFormats from "ajv-formats";
-import { titleCase } from "jaz-ts-utils";
 
 export async function generateValidators() {
     const schemaMap: Record<string, string> = {};
-
-    // for (const schema of tachyonConfig.compiledSchema.anyOf) {
-    //     const properties = schema.properties ?? schema.anyOf[0].properties;
-    //     const [serviceId, endpointId] = properties.commandId.const.split("/");
-    //     const commandType = properties.type.const;
-    //     schemaMap[`${serviceId}_${endpointId}_${commandType}`] = `${serviceId}/${endpointId}/${commandType}`;
-    // }
-
-    //const schemas = [...tachyonConfig.compiledSchema.anyOf, { definitions: tachyonConfig.compiledSchema.definitions }];
+    const schamaTitle: Record<string, string> = {};
 
     const schemas = [];
     for (const file of await fs.promises.readdir("schema", { recursive: true })) {
@@ -34,7 +25,9 @@ export async function generateValidators() {
             const properties = schema.properties ?? schema.anyOf[0].properties;
             const [serviceId, endpointId] = properties.commandId.const.split("/");
             const commandType = properties.type.const;
-            schemaMap[`${serviceId}_${endpointId}_${commandType}`] = schema.$id;
+            const schemaKey = `${serviceId}_${endpointId}_${commandType}`;
+            schemaMap[schemaKey] = schema.$id;
+            schamaTitle[schemaKey] = schema.title;
         }
     }
 
@@ -46,7 +39,7 @@ export async function generateValidators() {
             source: true,
             esm: true,
         },
-        keywords: ["scopes"],
+        keywords: ["tachyon"],
     });
     addFormats(ajvEsm);
     let moduleCode = `"use strict"
@@ -85,7 +78,7 @@ function ucs2length(str) {
             source: true,
             esm: false,
         },
-        keywords: ["scopes"],
+        keywords: ["tachyon"],
     });
     addFormats(ajvCjs);
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap);
@@ -97,20 +90,16 @@ function ucs2length(str) {
     const imports: string[] = [];
     let declarations = "";
     for (const key in schemaMap) {
-        const schemaType = key
-            .split("_")
-            .map((id) => titleCase(id))
-            .join("");
-        imports.push(schemaType);
-        declarations += `declare const ${key}: ValidateFunction<${schemaType}>;\n`;
+        imports.push(schamaTitle[key]);
+        declarations += `declare const ${key}: ValidateFunction<${schamaTitle[key]}>;\n`;
     }
     let types = "";
     types += `import type { ValidateFunction } from "ajv"\n`;
-    types += `import { ${imports.join(", ")} } from "..";\n\n`;
+    types += `import type { ${imports.join(", ")} } from "./types.js";\n\n`;
     types += declarations;
     types += `\nexport { ${Object.keys(schemaMap).join(", ")} };`;
 
     await fs.promises.writeFile("./dist/validators.d.ts", types);
-    await fs.promises.writeFile("./dist/validators.d.mts", types);
+    await fs.promises.writeFile("./dist/validators.d.mts", types.replace(".js", ".mjs"));
     process.stdout.write("✔️\n");
 }

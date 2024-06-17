@@ -76,55 +76,31 @@ Request to kill a battle.
 ```json
 {
     "title": "AutohostAddPlayerRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/addPlayer",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/addPlayer" },
         "data": {
+            "title": "AutohostAddPlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "userId": {
-                    "$ref": "../../definitions/userId.json"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
+                "battleId": { "type": "string", "format": "uuid" },
+                "userId": { "$ref": "../../definitions/userId.json" },
+                "name": { "type": "string" },
+                "password": { "type": "string" }
             },
-            "required": [
-                "battleId",
-                "userId",
-                "name",
-                "password"
-            ],
-            "title": "AutohostAddPlayerRequestData"
+            "required": ["battleId", "userId", "name", "password"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -171,56 +147,31 @@ export interface AutohostAddPlayerRequestData {
 ```json
 {
     "title": "AutohostAddPlayerResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "AutohostAddPlayerOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/addPlayer",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/addPlayer" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "AutohostAddPlayerFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/addPlayer",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/addPlayer" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -230,16 +181,11 @@ export interface AutohostAddPlayerRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -286,47 +232,29 @@ Kick a player from a battle.
 ```json
 {
     "title": "AutohostKickPlayerRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/kickPlayer",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/kickPlayer" },
         "data": {
+            "title": "AutohostKickPlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "userId": {
-                    "$ref": "../../definitions/userId.json"
-                }
+                "battleId": { "type": "string", "format": "uuid" },
+                "userId": { "$ref": "../../definitions/userId.json" }
             },
-            "required": [
-                "battleId",
-                "userId"
-            ],
-            "title": "AutohostKickPlayerRequestData"
+            "required": ["battleId", "userId"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -369,56 +297,31 @@ export interface AutohostKickPlayerRequestData {
 ```json
 {
     "title": "AutohostKickPlayerResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "AutohostKickPlayerOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/kickPlayer",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/kickPlayer" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "AutohostKickPlayerFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/kickPlayer",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/kickPlayer" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -428,16 +331,11 @@ export interface AutohostKickPlayerRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -484,43 +382,28 @@ Request to kill a battle.
 ```json
 {
     "title": "AutohostKillRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/kill",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/kill" },
         "data": {
+            "title": "AutohostKillRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "format": "uuid",
-                    "type": "string"
-                }
+                "battleId": { "type": "string", "format": "uuid" }
             },
-            "required": [
-                "battleId"
-            ],
-            "title": "AutohostKillRequestData"
+            "required": ["battleId"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -559,56 +442,31 @@ export interface AutohostKillRequestData {
 ```json
 {
     "title": "AutohostKillResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "AutohostKillOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/kill",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/kill" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "AutohostKillFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/kill",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/kill" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -618,16 +476,11 @@ export interface AutohostKillRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -674,47 +527,29 @@ Mute a player in a battle.
 ```json
 {
     "title": "AutohostMutePlayerRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/mutePlayer",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/mutePlayer" },
         "data": {
+            "title": "AutohostMutePlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "userId": {
-                    "$ref": "../../definitions/userId.json"
-                }
+                "battleId": { "type": "string", "format": "uuid" },
+                "userId": { "$ref": "../../definitions/userId.json" }
             },
-            "required": [
-                "battleId",
-                "userId"
-            ],
-            "title": "AutohostMutePlayerRequestData"
+            "required": ["battleId", "userId"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -757,56 +592,31 @@ export interface AutohostMutePlayerRequestData {
 ```json
 {
     "title": "AutohostMutePlayerResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "AutohostMutePlayerOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/mutePlayer",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/mutePlayer" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "AutohostMutePlayerFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/mutePlayer",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/mutePlayer" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -816,16 +626,11 @@ export interface AutohostMutePlayerRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -872,53 +677,30 @@ Send a custom command for the autohost to execute.
 ```json
 {
     "title": "AutohostSendCommandRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/sendCommand",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/sendCommand" },
         "data": {
+            "title": "AutohostSendCommandRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "command": {
-                    "type": "string"
-                },
-                "arguments": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
+                "battleId": { "type": "string", "format": "uuid" },
+                "command": { "type": "string" },
+                "arguments": { "type": "array", "items": { "type": "string" } }
             },
-            "required": [
-                "battleId",
-                "command"
-            ],
-            "title": "AutohostSendCommandRequestData"
+            "required": ["battleId", "command"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -960,56 +742,31 @@ export interface AutohostSendCommandRequestData {
 ```json
 {
     "title": "AutohostSendCommandResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "AutohostSendCommandOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/sendCommand",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/sendCommand" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "AutohostSendCommandFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/sendCommand",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/sendCommand" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -1019,16 +776,11 @@ export interface AutohostSendCommandRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -1075,48 +827,29 @@ Send a message for the autohost to display to players.
 ```json
 {
     "title": "AutohostSendMessageRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/sendMessage",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/sendMessage" },
         "data": {
+            "title": "AutohostSendMessageRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "message": {
-                    "maxLength": 127,
-                    "type": "string"
-                }
+                "battleId": { "type": "string", "format": "uuid" },
+                "message": { "type": "string", "maxLength": 127 }
             },
-            "required": [
-                "battleId",
-                "message"
-            ],
-            "title": "AutohostSendMessageRequestData"
+            "required": ["battleId", "message"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -1157,56 +890,31 @@ export interface AutohostSendMessageRequestData {
 ```json
 {
     "title": "AutohostSendMessageResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "AutohostSendMessageOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/sendMessage",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/sendMessage" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "AutohostSendMessageFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/sendMessage",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/sendMessage" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -1216,16 +924,11 @@ export interface AutohostSendMessageRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -1272,50 +975,32 @@ Force players to become spectators in a battle.
 ```json
 {
     "title": "AutohostSpecPlayersRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/specPlayers",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/specPlayers" },
         "data": {
+            "title": "AutohostSpecPlayersRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "format": "uuid",
-                    "type": "string"
-                },
+                "battleId": { "type": "string", "format": "uuid" },
                 "userIds": {
                     "type": "array",
-                    "items": {
-                        "$ref": "../../definitions/userId.json"
-                    }
+                    "items": { "$ref": "../../definitions/userId.json" }
                 }
             },
-            "required": [
-                "battleId",
-                "userIds"
-            ],
-            "title": "AutohostSpecPlayersRequestData"
+            "required": ["battleId", "userIds"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -1360,56 +1045,31 @@ export interface AutohostSpecPlayersRequestData {
 ```json
 {
     "title": "AutohostSpecPlayersResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "AutohostSpecPlayersOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/specPlayers",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/specPlayers" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "AutohostSpecPlayersFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/specPlayers",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/specPlayers" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -1419,16 +1079,11 @@ export interface AutohostSpecPlayersRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -1475,97 +1130,64 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 ```json
 {
     "title": "AutohostStartRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/start",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/start" },
         "data": {
+            "title": "AutohostStartRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "type": "string"
-                },
+                "battleId": { "type": "string" },
                 "engineVersion": {
-                    "pattern": "^[0-9a-zA-Z .+-]+$",
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "^[0-9a-zA-Z .+-]+$"
                 },
-                "gameName": {
-                    "type": "string"
-                },
-                "mapName": {
-                    "type": "string"
-                },
+                "gameName": { "type": "string" },
+                "mapName": { "type": "string" },
                 "gameArchiveHash": {
-                    "pattern": "^[a-fA-F0-9]{128}$",
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{128}$"
                 },
                 "mapArchiveHash": {
-                    "pattern": "^[a-fA-F0-9]{128}$",
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{128}$"
                 },
-                "startDelay": {
-                    "type": "integer"
-                },
+                "startDelay": { "type": "integer" },
                 "startPosType": {
                     "$ref": "../../definitions/startPosType.json"
                 },
                 "allyTeams": {
                     "type": "array",
-                    "items": {
-                        "$ref": "../../definitions/allyTeam.json"
-                    }
+                    "items": { "$ref": "../../definitions/allyTeam.json" }
                 },
                 "spectators": {
                     "type": "array",
-                    "items": {
-                        "$ref": "../../definitions/spectator.json"
-                    }
+                    "items": { "$ref": "../../definitions/spectator.json" }
                 },
                 "mapOptions": {
                     "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "string"
-                        }
-                    }
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
                 },
                 "gameOptions": {
                     "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "string"
-                        }
-                    }
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
                 },
                 "restrictions": {
                     "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
-                            "unitId": {
-                                "type": "string"
-                            },
-                            "limit": {
-                                "minimum": 0,
-                                "type": "integer"
-                            }
+                            "unitId": { "type": "string" },
+                            "limit": { "type": "integer", "minimum": 0 }
                         },
-                        "required": [
-                            "unitId",
-                            "limit"
-                        ]
+                        "required": ["unitId", "limit"]
                     }
                 }
             },
@@ -1580,17 +1202,12 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 "startPosType",
                 "allyTeams",
                 "spectators"
-            ],
-            "title": "AutohostStartRequestData"
+            ]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -1765,87 +1382,52 @@ export interface Spectator {
 ```json
 {
     "title": "AutohostStartResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "AutohostStartOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/start" },
+                "status": { "const": "success" },
                 "data": {
+                    "title": "AutohostStartOkResponseData",
                     "type": "object",
                     "properties": {
                         "ips": {
                             "type": "array",
                             "items": {
                                 "anyOf": [
-                                    {
-                                        "format": "ipv4",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "format": "ipv6",
-                                        "type": "string"
-                                    }
+                                    { "type": "string", "format": "ipv4" },
+                                    { "type": "string", "format": "ipv6" }
                                 ]
                             }
                         },
                         "port": {
+                            "type": "integer",
                             "minimum": 1024,
-                            "maximum": 65535,
-                            "type": "integer"
+                            "maximum": 65535
                         }
                     },
-                    "required": [
-                        "ips",
-                        "port"
-                    ],
-                    "title": "AutohostStartOkResponseData"
+                    "required": ["ips", "port"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "data"]
         },
         {
             "title": "AutohostStartFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/start" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "invalid_script",
@@ -1858,16 +1440,11 @@ export interface Spectator {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -1925,48 +1502,29 @@ This event should be sent to the server on connection and whenever any of the st
 ```json
 {
     "title": "AutohostStatusEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/status",
-            "type": "string"
-        },
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/status" },
         "data": {
+            "title": "AutohostStatusEventData",
             "type": "object",
             "properties": {
-                "maxBattles": {
-                    "minimum": 0,
-                    "type": "integer"
-                },
-                "currentBattles": {
-                    "minimum": 0,
-                    "type": "integer"
-                }
+                "maxBattles": { "type": "integer", "minimum": 0 },
+                "currentBattles": { "type": "integer", "minimum": 0 }
             },
-            "required": [
-                "maxBattles",
-                "currentBattles"
-            ],
-            "title": "AutohostStatusEventData"
+            "required": ["maxBattles", "currentBattles"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -2018,42 +1576,28 @@ Ask the autohost to send us updates about its battles.
 ```json
 {
     "title": "AutohostSubscribeUpdatesRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/subscribeUpdates",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/subscribeUpdates" },
         "data": {
+            "title": "AutohostSubscribeUpdatesRequestData",
             "type": "object",
             "properties": {
-                "since": {
-                    "$ref": "../../definitions/unixTime.json"
-                }
+                "since": { "$ref": "../../definitions/unixTime.json" }
             },
-            "required": [
-                "since"
-            ],
-            "title": "AutohostSubscribeUpdatesRequestData"
+            "required": ["since"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -2094,56 +1638,31 @@ export interface AutohostSubscribeUpdatesRequestData {
 ```json
 {
     "title": "AutohostSubscribeUpdatesResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "AutohostSubscribeUpdatesOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/subscribeUpdates",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/subscribeUpdates" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "AutohostSubscribeUpdatesFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/subscribeUpdates",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/subscribeUpdates" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -2153,16 +1672,11 @@ export interface AutohostSubscribeUpdatesRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -2209,179 +1723,109 @@ Inform the server of battle updates.
 ```json
 {
     "title": "AutohostUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/update",
-            "type": "string"
-        },
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/update" },
         "data": {
+            "title": "AutohostUpdateEventData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "time": {
-                    "$ref": "../../definitions/unixTime.json"
-                },
+                "battleId": { "type": "string", "format": "uuid" },
+                "time": { "$ref": "../../definitions/unixTime.json" },
                 "update": {
                     "anyOf": [
                         {
-                            "description": "The battle has started.",
                             "title": "StartUpdate",
+                            "description": "The battle has started.",
                             "type": "object",
-                            "properties": {
-                                "type": {
-                                    "const": "start",
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "type"
-                            ]
+                            "properties": { "type": { "const": "start" } },
+                            "required": ["type"]
                         },
                         {
-                            "description": "The battle finished, generated once per every single player reporting who won.",
                             "title": "FinishedUpdate",
+                            "description": "The battle finished, generated once per every single player reporting who won.",
                             "type": "object",
                             "properties": {
-                                "type": {
-                                    "const": "finished",
-                                    "type": "string"
-                                },
+                                "type": { "const": "finished" },
                                 "userId": {
                                     "$ref": "../../definitions/userId.json"
                                 },
                                 "winningAllyTeams": {
-                                    "minItems": 1,
                                     "description": "Ally team IDs",
                                     "type": "array",
-                                    "items": {
-                                        "type": "integer"
-                                    }
+                                    "items": { "type": "integer" },
+                                    "minItems": 1
                                 }
                             },
-                            "required": [
-                                "type",
-                                "userId",
-                                "winningAllyTeams"
-                            ]
+                            "required": ["type", "userId", "winningAllyTeams"]
                         },
                         {
-                            "description": "A message from the engine, e.g. some ip is trying to connect.",
                             "title": "EngineMessageUpdate",
+                            "description": "A message from the engine, e.g. some ip is trying to connect.",
                             "type": "object",
                             "properties": {
-                                "type": {
-                                    "const": "engine_message",
-                                    "type": "string"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
+                                "type": { "const": "engine_message" },
+                                "message": { "type": "string" }
                             },
-                            "required": [
-                                "type",
-                                "message"
-                            ]
+                            "required": ["type", "message"]
                         },
                         {
-                            "description": "A warning from the engine.",
                             "title": "EngineWarningUpdate",
+                            "description": "A warning from the engine.",
                             "type": "object",
                             "properties": {
-                                "type": {
-                                    "const": "engine_warning",
-                                    "type": "string"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
+                                "type": { "const": "engine_warning" },
+                                "message": { "type": "string" }
                             },
-                            "required": [
-                                "type",
-                                "message"
-                            ]
+                            "required": ["type", "message"]
                         },
                         {
-                            "description": "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
                             "title": "EngineQuitUpdate",
+                            "description": "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
                             "type": "object",
                             "properties": {
-                                "type": {
-                                    "const": "engine_quit",
-                                    "type": "string"
-                                }
+                                "type": { "const": "engine_quit" }
                             },
-                            "required": [
-                                "type"
-                            ]
+                            "required": ["type"]
                         },
                         {
-                            "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
                             "title": "EngineCrashUpdate",
+                            "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
                             "type": "object",
                             "properties": {
-                                "type": {
-                                    "const": "engine_crash",
-                                    "type": "string"
-                                }
+                                "type": { "const": "engine_crash" }
                             },
-                            "required": [
-                                "type"
-                            ]
+                            "required": ["type"]
                         },
                         {
-                            "description": "Player number in the game, can be useful for custom commands.",
                             "title": "PlayerJoinedUpdate",
+                            "description": "Player number in the game, can be useful for custom commands.",
                             "type": "object",
                             "properties": {
-                                "type": {
-                                    "const": "player_joined",
-                                    "type": "string"
-                                },
+                                "type": { "const": "player_joined" },
                                 "userId": {
                                     "$ref": "../../definitions/userId.json"
                                 },
-                                "playerNumber": {
-                                    "type": "integer"
-                                }
+                                "playerNumber": { "type": "integer" }
                             },
-                            "required": [
-                                "type",
-                                "userId",
-                                "playerNumber"
-                            ]
+                            "required": ["type", "userId", "playerNumber"]
                         }
                     ]
                 }
             },
-            "required": [
-                "battleId",
-                "time",
-                "update"
-            ],
-            "title": "AutohostUpdateEventData"
+            "required": ["battleId", "time", "update"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 

@@ -42,29 +42,20 @@ Cancel queueing for matchmaking.
 ```json
 {
     "title": "MatchmakingCancelRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/cancel",
-            "type": "string"
-        }
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/cancel" }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId"
-    ]
+    "required": ["type", "messageId", "commandId"]
 }
+
 ```
 </details>
 
@@ -96,56 +87,31 @@ export interface MatchmakingCancelRequest {
 ```json
 {
     "title": "MatchmakingCancelResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "MatchmakingCancelOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/cancel",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/cancel" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "MatchmakingCancelFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/cancel",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/cancel" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "not_queued",
@@ -156,16 +122,11 @@ export interface MatchmakingCancelRequest {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -212,46 +173,29 @@ Server should send this when there are enough queued players to form a valid bat
 ```json
 {
     "title": "MatchmakingFoundEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/found",
-            "type": "string"
-        },
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/found" },
         "data": {
+            "title": "MatchmakingFoundEventData",
             "type": "object",
             "properties": {
-                "queueId": {
-                    "type": "string"
-                },
-                "timeoutMs": {
-                    "type": "integer"
-                }
+                "queueId": { "type": "string" },
+                "timeoutMs": { "type": "integer" }
             },
-            "required": [
-                "queueId",
-                "timeoutMs"
-            ],
-            "title": "MatchmakingFoundEventData"
+            "required": ["queueId", "timeoutMs"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -303,42 +247,26 @@ Server should send this when players ready up using [ready](#ready).
 ```json
 {
     "title": "MatchmakingFoundUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/foundUpdate",
-            "type": "string"
-        },
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/foundUpdate" },
         "data": {
+            "title": "MatchmakingFoundUpdateEventData",
             "type": "object",
-            "properties": {
-                "readyCount": {
-                    "type": "integer"
-                }
-            },
-            "required": [
-                "readyCount"
-            ],
-            "title": "MatchmakingFoundUpdateEventData"
+            "properties": { "readyCount": { "type": "integer" } },
+            "required": ["readyCount"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -388,29 +316,20 @@ Returns all available matchmaking playlists.
 ```json
 {
     "title": "MatchmakingListRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/list",
-            "type": "string"
-        }
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/list" }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId"
-    ]
+    "required": ["type", "messageId", "commandId"]
 }
+
 ```
 </details>
 
@@ -442,30 +361,46 @@ export interface MatchmakingListRequest {
 ```json
 {
     "title": "MatchmakingListResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "MatchmakingListOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/list",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/list" },
+                "status": { "const": "success" },
                 "data": {
+                    "title": "MatchmakingListOkResponseData",
+                    "type": "object",
+                    "properties": {
+                        "playlists": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": { "type": "string" },
+                                    "name": { "type": "string" },
+                                    "numOfTeams": { "type": "integer" },
+                                    "teamSize": { "type": "integer" },
+                                    "ranked": { "type": "boolean" }
+                                },
+                                "required": [
+                                    "id",
+                                    "name",
+                                    "numOfTeams",
+                                    "teamSize",
+                                    "ranked"
+                                ]
+                            }
+                        }
+                    },
+                    "required": ["playlists"],
                     "examples": [
                         {
                             "playlists": [
@@ -485,73 +420,19 @@ export interface MatchmakingListRequest {
                                 }
                             ]
                         }
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "playlists": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "string"
-                                    },
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "numOfTeams": {
-                                        "type": "integer"
-                                    },
-                                    "teamSize": {
-                                        "type": "integer"
-                                    },
-                                    "ranked": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "required": [
-                                    "id",
-                                    "name",
-                                    "numOfTeams",
-                                    "teamSize",
-                                    "ranked"
-                                ]
-                            }
-                        }
-                    },
-                    "required": [
-                        "playlists"
-                    ],
-                    "title": "MatchmakingListOkResponseData"
+                    ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "data"]
         },
         {
             "title": "MatchmakingListFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/list",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/list" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -561,16 +442,11 @@ export interface MatchmakingListRequest {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -645,29 +521,20 @@ Sent when a found match gets disbanded because a client failed to ready up.
 ```json
 {
     "title": "MatchmakingLostEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/lost",
-            "type": "string"
-        }
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/lost" }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId"
-    ]
+    "required": ["type", "messageId", "commandId"]
 }
+
 ```
 </details>
 
@@ -710,46 +577,32 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 ```json
 {
     "title": "MatchmakingQueueRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/queue",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/queue" },
         "data": {
+            "title": "MatchmakingQueueRequestData",
             "type": "object",
             "properties": {
                 "queues": {
-                    "minItems": 1,
                     "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "items": { "type": "string" },
+                    "minItems": 1
                 }
             },
-            "required": [
-                "queues"
-            ],
-            "title": "MatchmakingQueueRequestData"
+            "required": ["queues"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -791,56 +644,31 @@ export interface MatchmakingQueueRequestData {
 ```json
 {
     "title": "MatchmakingQueueResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "MatchmakingQueueOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queue",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/queue" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "MatchmakingQueueFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queue",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/queue" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "invalid_queue_specified",
@@ -853,16 +681,11 @@ export interface MatchmakingQueueRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -909,42 +732,26 @@ Contains some info about the state of the current queue.
 ```json
 {
     "title": "MatchmakingQueueUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/queueUpdate",
-            "type": "string"
-        },
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/queueUpdate" },
         "data": {
+            "title": "MatchmakingQueueUpdateEventData",
             "type": "object",
-            "properties": {
-                "playersQueued": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "playersQueued"
-            ],
-            "title": "MatchmakingQueueUpdateEventData"
+            "properties": { "playersQueued": { "type": "string" } },
+            "required": ["playersQueued"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -994,29 +801,20 @@ Clients should send this when they are ready to proceed with the found match. If
 ```json
 {
     "title": "MatchmakingReadyRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/ready",
-            "type": "string"
-        }
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/ready" }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId"
-    ]
+    "required": ["type", "messageId", "commandId"]
 }
+
 ```
 </details>
 
@@ -1048,56 +846,31 @@ export interface MatchmakingReadyRequest {
 ```json
 {
     "title": "MatchmakingReadyResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "anyOf": [
         {
             "title": "MatchmakingReadyOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/ready",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/ready" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "MatchmakingReadyFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/ready",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/ready" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "no_match",
@@ -1108,16 +881,11 @@ export interface MatchmakingReadyRequest {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -1164,46 +932,29 @@ Sent when a client in a found match readies up.
 ```json
 {
     "title": "MatchmakingReadyUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/readyUpdate",
-            "type": "string"
-        },
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/readyUpdate" },
         "data": {
+            "title": "MatchmakingReadyUpdateEventData",
             "type": "object",
             "properties": {
-                "readyMax": {
-                    "type": "integer"
-                },
-                "readyCurrent": {
-                    "type": "integer"
-                }
+                "readyMax": { "type": "integer" },
+                "readyCurrent": { "type": "integer" }
             },
-            "required": [
-                "readyMax",
-                "readyCurrent"
-            ],
-            "title": "MatchmakingReadyUpdateEventData"
+            "required": ["readyMax", "readyCurrent"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 

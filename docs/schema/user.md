@@ -23,45 +23,31 @@ Contains the full state of users that the client has just subscribed to. This ev
 ```json
 {
     "title": "UserAddEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "user/add",
-            "type": "string"
-        },
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/add" },
         "data": {
+            "title": "UserAddEventData",
             "type": "object",
             "properties": {
                 "users": {
                     "type": "array",
-                    "items": {
-                        "$ref": "../../definitions/privateUser.json"
-                    }
+                    "items": { "$ref": "../../definitions/privateUser.json" }
                 }
             },
-            "required": [
-                "users"
-            ],
-            "title": "UserAddEventData"
+            "required": ["users"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -283,80 +269,57 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "title": "UserUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "user/update",
-            "type": "string"
-        },
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/update" },
         "data": {
+            "title": "UserUpdateEventData",
             "type": "object",
             "properties": {
                 "users": {
                     "type": "array",
                     "items": {
+                        "type": "object",
                         "allOf": [
-                            {
-                                "type": "object",
-                                "properties": {}
-                            },
+                            { "type": "object", "properties": {} },
                             {
                                 "type": "object",
                                 "properties": {
                                     "friendIds": {
                                         "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                        "items": { "type": "string" }
                                     },
                                     "outgoingFriendRequestIds": {
                                         "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                        "items": { "type": "string" }
                                     },
                                     "incomingFriendRequestIds": {
                                         "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                        "items": { "type": "string" }
                                     },
                                     "ignoreIds": {
                                         "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                        "items": { "type": "string" }
                                     }
                                 }
                             }
-                        ],
-                        "type": "object"
+                        ]
                     }
                 }
             },
-            "required": [
-                "users"
-            ],
-            "title": "UserUpdateEventData"
+            "required": ["users"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
