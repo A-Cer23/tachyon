@@ -1,18 +1,13 @@
 {
     "$id": "https://schema.beyondallreason.dev/tachyon/definitions/battleStatus.json",
+    "title": "BattleStatus",
     "anyOf": [
         {
             "allOf": [
                 {
                     "type": "object",
-                    "properties": {
-                        "battleId": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "battleId"
-                    ]
+                    "properties": { "battleId": { "type": "string" } },
+                    "required": ["battleId"]
                 },
                 {
                     "anyOf": [
@@ -21,18 +16,11 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "isSpectator": {
-                                            "const": true,
-                                            "type": "boolean"
-                                        }
+                                        "isSpectator": { "const": true }
                                     },
-                                    "required": [
-                                        "isSpectator"
-                                    ]
+                                    "required": ["isSpectator"]
                                 },
-                                {
-                                    "$ref": "../definitions/spectator.json"
-                                }
+                                { "$ref": "../definitions/spectator.json" }
                             ]
                         },
                         {
@@ -40,27 +28,17 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "isSpectator": {
-                                            "const": false,
-                                            "type": "boolean"
-                                        }
+                                        "isSpectator": { "const": false }
                                     },
-                                    "required": [
-                                        "isSpectator"
-                                    ]
+                                    "required": ["isSpectator"]
                                 },
-                                {
-                                    "$ref": "../definitions/player.json"
-                                }
+                                { "$ref": "../definitions/player.json" }
                             ]
                         }
                     ]
                 }
             ]
         },
-        {
-            "type": "null"
-        }
-    ],
-    "title": "BattleStatus"
+        { "type": "null" }
+    ]
 }
