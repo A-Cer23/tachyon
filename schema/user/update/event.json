@@ -1,0 +1,141 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://schema.beyondallreason.dev/tachyon/user/update/event.json",
+    "title": "UserUpdateEvent",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "user/update",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "allOf": [
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "format": "uuid",
+                                        "examples": [
+                                            "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "displayName": {
+                                        "type": "string"
+                                    },
+                                    "clanId": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
+                                    },
+                                    "partyId": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
+                                    },
+                                    "scopes": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "countryCode": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "anyOf": [
+                                            {
+                                                "const": "offline",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "menu",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "playing",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "lobby",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "friendIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "outgoingFriendRequestIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "incomingFriendRequestIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "ignoreIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "type": "object"
+                    }
+                }
+            },
+            "required": [
+                "users"
+            ],
+            "title": "UserUpdateEventData"
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

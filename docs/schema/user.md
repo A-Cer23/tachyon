@@ -2,12 +2,13 @@
 
 # User
 
-- [updated](#updated)
+- [add](#add)
+- [update](#update)
 ---
 
-## Updated
+## Add
 
-Sent by the server to inform the client when subscribed users get updated in some way. The root object of each array element in `users` are partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged. This event should be sent to a user when they login to inform them about their own user data.
+Contains the full state of users that the client has just subscribed to. This event should always precede [update](#update) events which contain partial updates of how users have changed.
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -21,7 +22,7 @@ Sent by the server to inform the client when subscribed users get updated in som
 
 ```json
 {
-    "title": "UserUpdatedEvent",
+    "title": "UserAddEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -35,7 +36,215 @@ Sent by the server to inform the client when subscribed users get updated in som
             "type": "string"
         },
         "commandId": {
-            "const": "user/updated",
+            "const": "user/add",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../../definitions/privateUser.json"
+                    }
+                }
+            },
+            "required": [
+                "users"
+            ],
+            "title": "UserAddEventData"
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "occaecat Lorem in",
+    "commandId": "user/add",
+    "data": {
+        "users": [
+            {
+                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                "username": "occaecat Lorem in",
+                "displayName": "occaecat Lorem in",
+                "clanId": "occaecat Lorem in",
+                "partyId": "occaecat Lorem in",
+                "scopes": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "countryCode": "occaecat Lorem in",
+                "status": "menu",
+                "friendIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "outgoingFriendRequestIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "incomingFriendRequestIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "ignoreIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ]
+            },
+            {
+                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                "username": "occaecat Lorem in",
+                "displayName": "occaecat Lorem in",
+                "clanId": "occaecat Lorem in",
+                "partyId": "occaecat Lorem in",
+                "scopes": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "countryCode": "occaecat Lorem in",
+                "status": "menu",
+                "friendIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "outgoingFriendRequestIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "incomingFriendRequestIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "ignoreIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ]
+            },
+            {
+                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                "username": "occaecat Lorem in",
+                "displayName": "occaecat Lorem in",
+                "clanId": "occaecat Lorem in",
+                "partyId": "occaecat Lorem in",
+                "scopes": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "countryCode": "occaecat Lorem in",
+                "status": "menu",
+                "friendIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "outgoingFriendRequestIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "incomingFriendRequestIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "ignoreIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ]
+            }
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type PrivateUser = {
+    userId: UserId;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    partyId: string | null;
+    scopes: string[];
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+} & {
+    friendIds: string[];
+    outgoingFriendRequestIds: string[];
+    incomingFriendRequestIds: string[];
+    ignoreIds: string[];
+};
+export type UserId = string;
+
+export interface UserAddEvent {
+    type: "event";
+    messageId: string;
+    commandId: "user/add";
+    data: UserAddEventData;
+}
+export interface UserAddEventData {
+    users: PrivateUser[];
+}
+```
+---
+
+## Update
+
+Sent by the server to inform the client when subscribed users get updated in some way. The root object of each array element in `users` are partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged. This event should precede the [add](#add) event which contains the full, initial state of users.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserUpdateEvent",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "user/update",
             "type": "string"
         },
         "data": {
@@ -149,7 +358,7 @@ Sent by the server to inform the client when subscribed users get updated in som
             "required": [
                 "users"
             ],
-            "title": "UserUpdatedEventData"
+            "title": "UserUpdateEventData"
         }
     },
     "required": [
@@ -168,59 +377,59 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "occaecat Lorem in",
-    "commandId": "user/updated",
+    "messageId": "pariatur Lorem reprehenderit",
+    "commandId": "user/update",
     "data": {
         "users": [
             {
-                "occaecatff": -19999999.999999955,
+                "pariaturff": -17999999.999999955,
                 "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "occaecat Lorem in",
+                "username": "pariatur Lorem reprehenderit",
                 "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ],
-                "countryCode": "occaecat Lorem in",
+                "countryCode": "pariatur Lorem reprehenderit",
                 "status": "menu",
                 "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ]
             },
             {
-                "occaecatff": -19999999.999999955,
+                "pariaturff": -17999999.999999955,
                 "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "occaecat Lorem in",
+                "username": "pariatur Lorem reprehenderit",
                 "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ],
-                "countryCode": "occaecat Lorem in",
+                "countryCode": "pariatur Lorem reprehenderit",
                 "status": "menu",
                 "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ]
             },
             {
-                "occaecatff": -19999999.999999955,
+                "pariaturff": -17999999.999999955,
                 "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "occaecat Lorem in",
+                "username": "pariatur Lorem reprehenderit",
                 "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ],
-                "countryCode": "occaecat Lorem in",
+                "countryCode": "pariatur Lorem reprehenderit",
                 "status": "menu",
                 "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ]
             }
         ]
@@ -231,13 +440,13 @@ Sent by the server to inform the client when subscribed users get updated in som
 
 #### TypeScript Definition
 ```ts
-export interface UserUpdatedEvent {
+export interface UserUpdateEvent {
     type: "event";
     messageId: string;
-    commandId: "user/updated";
-    data: UserUpdatedEventData;
+    commandId: "user/update";
+    data: UserUpdateEventData;
 }
-export interface UserUpdatedEventData {
+export interface UserUpdateEventData {
     users: ({
         userId?: string;
         username?: string;

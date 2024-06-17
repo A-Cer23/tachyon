@@ -2709,7 +2709,7 @@
             ]
         },
         {
-            "title": "UserUpdatedEvent",
+            "title": "UserAddEvent",
             "scopes": [
                 "tachyon.lobby"
             ],
@@ -2723,7 +2723,48 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/updated",
+                    "const": "user/add",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "users": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/privateUser"
+                            }
+                        }
+                    },
+                    "required": [
+                        "users"
+                    ],
+                    "title": "UserAddEventData"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "title": "UserUpdateEvent",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "user/update",
                     "type": "string"
                 },
                 "data": {
@@ -2837,7 +2878,7 @@
                     "required": [
                         "users"
                     ],
-                    "title": "UserUpdatedEventData"
+                    "title": "UserUpdateEventData"
                 }
             },
             "required": [
