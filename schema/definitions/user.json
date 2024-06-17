@@ -59,6 +59,9 @@
                     "type": "string"
                 }
             ]
+        },
+        "battleStatus": {
+            "$ref": "../definitions/battleStatus.json"
         }
     },
     "required": [
@@ -68,7 +71,8 @@
         "clanId",
         "partyId",
         "scopes",
-        "status"
+        "status",
+        "battleStatus"
     ],
     "title": "User"
 }

@@ -1,0 +1,66 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/battleStatus.json",
+    "anyOf": [
+        {
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "battleId": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "battleId"
+                    ]
+                },
+                {
+                    "anyOf": [
+                        {
+                            "allOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "isSpectator": {
+                                            "const": true,
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": [
+                                        "isSpectator"
+                                    ]
+                                },
+                                {
+                                    "$ref": "../definitions/spectator.json"
+                                }
+                            ]
+                        },
+                        {
+                            "allOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "isSpectator": {
+                                            "const": false,
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": [
+                                        "isSpectator"
+                                    ]
+                                },
+                                {
+                                    "$ref": "../definitions/player.json"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "null"
+        }
+    ],
+    "title": "BattleStatus"
+}

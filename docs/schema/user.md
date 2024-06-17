@@ -88,6 +88,13 @@ Contains the full state of users that the client has just subscribed to. This ev
                 ],
                 "countryCode": "occaecat Lorem in",
                 "status": "menu",
+                "battleStatus": {
+                    "battleId": "occaecat Lorem in",
+                    "isSpectator": true,
+                    "name": "occaecat Lorem in",
+                    "rank": -20000000,
+                    "countryCode": "occaecat Lorem in"
+                },
                 "friendIds": [
                     "occaecat Lorem in",
                     "occaecat Lorem in",
@@ -122,6 +129,14 @@ Contains the full state of users that the client has just subscribed to. This ev
                 ],
                 "countryCode": "occaecat Lorem in",
                 "status": "menu",
+                "battleStatus": {
+                    "battleId": "occaecat Lorem in",
+                    "isSpectator": true,
+                    "userId": {},
+                    "name": "occaecat Lorem in",
+                    "rank": -20000000,
+                    "countryCode": "occaecat Lorem in"
+                },
                 "friendIds": [
                     "occaecat Lorem in",
                     "occaecat Lorem in",
@@ -156,6 +171,14 @@ Contains the full state of users that the client has just subscribed to. This ev
                 ],
                 "countryCode": "occaecat Lorem in",
                 "status": "menu",
+                "battleStatus": {
+                    "battleId": "occaecat Lorem in",
+                    "isSpectator": true,
+                    "userId": {},
+                    "name": "occaecat Lorem in",
+                    "rank": -20000000,
+                    "countryCode": "occaecat Lorem in"
+                },
                 "friendIds": [
                     "occaecat Lorem in",
                     "occaecat Lorem in",
@@ -194,6 +217,7 @@ export type PrivateUser = {
     scopes: string[];
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
+    battleStatus: BattleStatus;
 } & {
     friendIds: string[];
     outgoingFriendRequestIds: string[];
@@ -201,6 +225,28 @@ export type PrivateUser = {
     ignoreIds: string[];
 };
 export type UserId = string;
+export type BattleStatus =
+    | ({
+          battleId: string;
+      } & (
+          | ({
+                isSpectator: true;
+            } & {
+                userId: UserId;
+                name: string;
+                rank: number;
+                countryCode: string;
+            })
+          | ({
+                isSpectator: false;
+            } & Player)
+      ))
+    | null;
+export type Player = Spectator & {
+    customOptions?: {
+        [k: string]: string;
+    };
+};
 
 export interface UserAddEvent {
     type: "event";
@@ -210,6 +256,12 @@ export interface UserAddEvent {
 }
 export interface UserAddEventData {
     users: PrivateUser[];
+}
+export interface Spectator {
+    userId: UserId;
+    name: string;
+    rank: number;
+    countryCode: string;
 }
 ```
 ---
@@ -256,70 +308,7 @@ Sent by the server to inform the client when subscribed users get updated in som
                         "allOf": [
                             {
                                 "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "format": "uuid",
-                                        "examples": [
-                                            "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
-                                        ],
-                                        "type": "string"
-                                    },
-                                    "username": {
-                                        "type": "string"
-                                    },
-                                    "displayName": {
-                                        "type": "string"
-                                    },
-                                    "clanId": {
-                                        "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "partyId": {
-                                        "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "scopes": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "countryCode": {
-                                        "type": "string"
-                                    },
-                                    "status": {
-                                        "anyOf": [
-                                            {
-                                                "const": "offline",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "menu",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "playing",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "lobby",
-                                                "type": "string"
-                                            }
-                                        ]
-                                    }
-                                }
+                                "properties": {}
                             },
                             {
                                 "type": "object",
@@ -382,51 +371,51 @@ Sent by the server to inform the client when subscribed users get updated in som
     "data": {
         "users": [
             {
-                "pariaturff": -17999999.999999955,
-                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "pariatur Lorem reprehenderit",
-                "scopes": [
+                "friendIds": [
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit"
                 ],
-                "countryCode": "pariatur Lorem reprehenderit",
-                "status": "menu",
-                "outgoingFriendRequestIds": [
+                "incomingFriendRequestIds": [
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
+                ],
+                "ignoreIds": [
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit"
                 ]
             },
             {
-                "pariaturff": -17999999.999999955,
-                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "pariatur Lorem reprehenderit",
-                "scopes": [
+                "friendIds": [
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit"
                 ],
-                "countryCode": "pariatur Lorem reprehenderit",
-                "status": "menu",
-                "outgoingFriendRequestIds": [
+                "incomingFriendRequestIds": [
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
+                ],
+                "ignoreIds": [
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit"
                 ]
             },
             {
-                "pariaturff": -17999999.999999955,
-                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "pariatur Lorem reprehenderit",
-                "scopes": [
+                "friendIds": [
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit"
                 ],
-                "countryCode": "pariatur Lorem reprehenderit",
-                "status": "menu",
-                "outgoingFriendRequestIds": [
+                "incomingFriendRequestIds": [
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
+                ],
+                "ignoreIds": [
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit",
                     "pariatur Lorem reprehenderit"
@@ -447,16 +436,7 @@ export interface UserUpdateEvent {
     data: UserUpdateEventData;
 }
 export interface UserUpdateEventData {
-    users: ({
-        userId?: string;
-        username?: string;
-        displayName?: string;
-        clanId?: string | null;
-        partyId?: string | null;
-        scopes?: string[];
-        countryCode?: string;
-        status?: "offline" | "menu" | "playing" | "lobby";
-    } & {
+    users: ({} & {
         friendIds?: string[];
         outgoingFriendRequestIds?: string[];
         incomingFriendRequestIds?: string[];

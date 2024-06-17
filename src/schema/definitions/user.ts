@@ -1,5 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
+import { battleStatus } from "@/schema/definitions/battleStatus";
 import { userId } from "@/schema/definitions/userId";
 import { Nullable } from "@/typebox-utils";
 
@@ -18,6 +19,7 @@ export const user = Type.Object(
             Type.Literal("playing"),
             Type.Literal("lobby"),
         ]),
+        battleStatus: Type.Ref(battleStatus)
     },
     { $id: "user" }
 );
