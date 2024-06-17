@@ -14,14 +14,15 @@ export const battleStatus = Nullable(
                 Type.Object({
                     isSpectator: Type.Literal(true),
                 }),
-                Type.Ref(spectator)
+                Type.Ref(spectator),
             ]),
             Type.Intersect([
                 Type.Object({
                     isSpectator: Type.Literal(false),
                 }),
-                Type.Ref(player)
+                Type.Ref(player),
             ]),
         ]),
-    ]), { $id: "battleStatus" }
+    ]),
+    { $id: "battleStatus" }
 );

@@ -19,7 +19,7 @@ export const user = Type.Object(
             Type.Literal("playing"),
             Type.Literal("lobby"),
         ]),
-        battleStatus: Type.Ref(battleStatus)
+        battleStatus: Type.Ref(battleStatus),
     },
     { $id: "user" }
 );
