@@ -8,15 +8,20 @@
             "properties": {
                 "teams": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/team" }
+                    "items": { "$ref": "#/definitions/team" },
+                    "minItems": 1
                 },
                 "startBox": { "$ref": "#/definitions/startBox" },
-                "options": {
-                    "type": "object",
-                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                "allies": {
+                    "description": "0-based indexes into of the other allyteams to ally with",
+                    "type": "array",
+                    "items": { "type": "integer" }
+                },
+                "customProperties": {
+                    "$ref": "#/definitions/customStartScriptProperties"
                 }
             },
-            "required": ["teams", "startBox"]
+            "required": ["teams"]
         },
         "battleStatus": {
             "anyOf": [
@@ -71,36 +76,43 @@
                     "format": "uuid"
                 },
                 "name": { "type": "string" },
-                "aiShortName": { "type": "string" },
+                "aiShortName": {
+                    "description": "Short name of the AI library",
+                    "type": "string"
+                },
                 "aiVersion": { "type": "string" },
-                "customOptions": {
+                "aiOptions": {
+                    "description": "AI-specific options",
                     "type": "object",
-                    "patternProperties": { "^(.*)$": {} }
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                },
+                "customProperties": {
+                    "$ref": "#/definitions/customStartScriptProperties"
                 }
             },
-            "required": [
-                "hostUserId",
-                "name",
-                "aiShortName",
-                "aiVersion",
-                "customOptions"
-            ]
+            "required": ["hostUserId", "aiShortName"]
+        },
+        "customStartScriptProperties": {
+            "description": "Additional custom properties to set in engine StartScript for this object, must not collide with existing properties",
+            "type": "object",
+            "patternProperties": { "^[a-zA-Z0-9_-]$": { "type": "string" } }
         },
         "player": {
-            "allOf": [
-                { "$ref": "#/definitions/spectator" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "customOptions": {
-                            "type": "object",
-                            "patternProperties": {
-                                "^(.*)$": { "type": "string" }
-                            }
-                        }
-                    }
+            "type": "object",
+            "properties": {
+                "userId": { "$ref": "#/definitions/userId" },
+                "name": {
+                    "description": "Name of the player, must be unique just like userId",
+                    "type": "string"
+                },
+                "password": { "type": "string" },
+                "rank": { "type": "integer" },
+                "countryCode": { "type": "string" },
+                "customProperties": {
+                    "$ref": "#/definitions/customStartScriptProperties"
                 }
-            ]
+            },
+            "required": ["userId", "name", "password"]
         },
         "privateUser": {
             "allOf": [
@@ -134,26 +146,13 @@
                 }
             ]
         },
-        "spectator": {
-            "type": "object",
-            "properties": {
-                "userId": { "$ref": "#/definitions/userId" },
-                "name": {
-                    "description": "Name of the player, must be unique just like userId",
-                    "type": "string"
-                },
-                "rank": { "type": "integer" },
-                "countryCode": { "type": "string" }
-            },
-            "required": ["userId", "name", "rank", "countryCode"]
-        },
         "startBox": {
             "type": "object",
             "properties": {
-                "top": { "type": "integer", "minimum": 0, "maximum": 200 },
-                "bottom": { "type": "integer", "minimum": 0, "maximum": 200 },
-                "left": { "type": "integer", "minimum": 0, "maximum": 200 },
-                "right": { "type": "integer", "minimum": 0, "maximum": 200 }
+                "top": { "type": "number", "minimum": 0, "maximum": 1 },
+                "bottom": { "type": "number", "minimum": 0, "maximum": 1 },
+                "left": { "type": "number", "minimum": 0, "maximum": 1 },
+                "right": { "type": "number", "minimum": 0, "maximum": 1 }
             },
             "required": ["top", "bottom", "left", "right"]
         },
@@ -189,17 +188,15 @@
                     },
                     "required": ["x", "y"]
                 },
-                "options": {
-                    "type": "object",
-                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                "customProperties": {
+                    "$ref": "#/definitions/customStartScriptProperties"
                 }
-            },
-            "required": ["players", "bots", "faction", "color"]
+            }
         },
         "unixTime": {
             "description": "Unix timestamp in microseconds",
             "type": "integer",
-            "examples": [1705432698]
+            "examples": [1705432698000000]
         },
         "user": {
             "type": "object",
@@ -303,7 +300,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -373,7 +371,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -442,7 +441,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -471,9 +471,11 @@
                     "type": "object",
                     "properties": {
                         "battleId": { "type": "string", "format": "uuid" },
-                        "userId": { "$ref": "#/definitions/userId" }
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "chat": { "type": "boolean" },
+                        "draw": { "type": "boolean" }
                     },
-                    "required": ["battleId", "userId"]
+                    "required": ["battleId", "userId", "chat", "draw"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -512,7 +514,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -586,7 +589,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -656,7 +660,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -729,7 +734,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -757,7 +763,7 @@
                     "title": "AutohostStartRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "type": "string", "format": "uuid" },
                         "engineVersion": {
                             "type": "string",
                             "pattern": "^[0-9a-zA-Z .+-]+$"
@@ -778,11 +784,12 @@
                         },
                         "allyTeams": {
                             "type": "array",
-                            "items": { "$ref": "#/definitions/allyTeam" }
+                            "items": { "$ref": "#/definitions/allyTeam" },
+                            "minItems": 1
                         },
                         "spectators": {
                             "type": "array",
-                            "items": { "$ref": "#/definitions/spectator" }
+                            "items": { "$ref": "#/definitions/player" }
                         },
                         "mapOptions": {
                             "type": "object",
@@ -797,15 +804,16 @@
                             }
                         },
                         "restrictions": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "unitId": { "type": "string" },
-                                    "limit": { "type": "integer", "minimum": 0 }
-                                },
-                                "required": ["unitId", "limit"]
+                            "description": "Mapping from unitDefId to the maximum number of units of that type that can be built.",
+                            "type": "object",
+                            "patternProperties": {
+                                "^(.*)$": { "type": "integer", "minimum": 0 }
                             }
+                        },
+                        "luamsgRegexp": {
+                            "description": "When set, battle will generate updates for luamsgs matching this regexp. No updates will be generated if this is not set.",
+                            "type": "string",
+                            "format": "regex"
                         }
                     },
                     "required": [
@@ -813,12 +821,8 @@
                         "engineVersion",
                         "gameName",
                         "mapName",
-                        "gameArchiveHash",
-                        "mapArchiveHash",
-                        "startDelay",
                         "startPosType",
-                        "allyTeams",
-                        "spectators"
+                        "allyTeams"
                     ]
                 }
             },
@@ -886,15 +890,15 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "invalid_script",
-                                "server_already_running",
-                                "server_failed_to_start",
+                                "battle_already_exists",
+                                "engine_version_not_available",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -987,7 +991,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1084,25 +1089,148 @@
                                     "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
                                     "type": "object",
                                     "properties": {
-                                        "type": { "const": "engine_crash" }
+                                        "type": { "const": "engine_crash" },
+                                        "details": {
+                                            "description": "Optional, short, details of the crash.",
+                                            "type": "string"
+                                        }
                                     },
                                     "required": ["type"]
                                 },
                                 {
                                     "title": "PlayerJoinedUpdate",
-                                    "description": "Player number in the game, can be useful for custom commands.",
                                     "type": "object",
                                     "properties": {
                                         "type": { "const": "player_joined" },
                                         "userId": {
                                             "$ref": "#/definitions/userId"
                                         },
-                                        "playerNumber": { "type": "integer" }
+                                        "playerNumber": {
+                                            "description": "Player number in the game, can be useful for custom commands",
+                                            "type": "integer"
+                                        }
                                     },
                                     "required": [
                                         "type",
                                         "userId",
                                         "playerNumber"
+                                    ]
+                                },
+                                {
+                                    "title": "PlayerLeftUpdate",
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player_left" },
+                                        "userId": {
+                                            "$ref": "#/definitions/userId"
+                                        },
+                                        "reason": {
+                                            "enum": [
+                                                "lost_connection",
+                                                "left",
+                                                "kicked"
+                                            ]
+                                        }
+                                    },
+                                    "required": ["type", "userId", "reason"]
+                                },
+                                {
+                                    "title": "PlayerChatUpdate",
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "const": "player_chat"
+                                                },
+                                                "userId": {
+                                                    "$ref": "#/definitions/userId"
+                                                },
+                                                "message": { "type": "string" },
+                                                "destination": {
+                                                    "enum": [
+                                                        "allies",
+                                                        "all",
+                                                        "spectators"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "userId",
+                                                "message",
+                                                "destination"
+                                            ]
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "const": "player_chat"
+                                                },
+                                                "userId": {
+                                                    "$ref": "#/definitions/userId"
+                                                },
+                                                "message": { "type": "string" },
+                                                "destination": {
+                                                    "const": "player"
+                                                },
+                                                "toUserId": {
+                                                    "$ref": "#/definitions/userId"
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "userId",
+                                                "message",
+                                                "destination",
+                                                "toUserId"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "PlayerDefeatedUpdate",
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player_defeated" },
+                                        "userId": {
+                                            "$ref": "#/definitions/userId"
+                                        }
+                                    },
+                                    "required": ["type", "userId"]
+                                },
+                                {
+                                    "title": "LuaMsgUpdate",
+                                    "description": "This update is generated only for messages matching luamsgRegexp set in the battle start script.",
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "luamsg" },
+                                        "userId": {
+                                            "$ref": "#/definitions/userId"
+                                        },
+                                        "script": {
+                                            "enum": ["ui", "game", "rules"]
+                                        },
+                                        "uiMode": {
+                                            "description": "Set when script is 'ui'",
+                                            "enum": [
+                                                "all",
+                                                "allies",
+                                                "spectators"
+                                            ]
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "contentEncoding": "base64",
+                                            "contentMediaType": "application/octet-stream"
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "userId",
+                                        "script",
+                                        "data"
                                     ]
                                 }
                             ]
@@ -1173,7 +1301,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1235,7 +1364,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1394,7 +1524,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1485,7 +1616,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1568,7 +1700,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1659,7 +1792,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1734,7 +1868,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
