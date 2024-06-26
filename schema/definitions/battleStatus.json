@@ -10,31 +10,15 @@
                     "required": ["battleId"]
                 },
                 {
-                    "anyOf": [
+                    "allOf": [
                         {
-                            "allOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "isSpectator": { "const": true }
-                                    },
-                                    "required": ["isSpectator"]
-                                },
-                                { "$ref": "../definitions/spectator.json" }
-                            ]
+                            "type": "object",
+                            "properties": {
+                                "isSpectator": { "type": "boolean" }
+                            },
+                            "required": ["isSpectator"]
                         },
-                        {
-                            "allOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "isSpectator": { "const": false }
-                                    },
-                                    "required": ["isSpectator"]
-                                },
-                                { "$ref": "../definitions/player.json" }
-                            ]
-                        }
+                        { "$ref": "../definitions/player.json" }
                     ]
                 }
             ]
