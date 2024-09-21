@@ -14,25 +14,14 @@
         "commandId": { "const": "user/add" },
         "data": {
             "title": "UserAddEventData",
-            "anyOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "self": { "$ref": "../../definitions/privateUser.json" }
-                    },
-                    "required": ["self"]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "users": {
-                            "type": "array",
-                            "items": { "$ref": "../../definitions/user.json" }
-                        }
-                    },
-                    "required": ["users"]
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "items": { "$ref": "../../definitions/user.json" }
                 }
-            ]
+            },
+            "required": ["users"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

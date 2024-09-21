@@ -59,18 +59,6 @@ Cancel queueing for matchmaking.
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "magna commodo",
-    "commandId": "matchmaking/cancel"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface MatchmakingCancelRequest {
@@ -131,19 +119,6 @@ export interface MatchmakingCancelRequest {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "id ea",
-    "commandId": "matchmaking/cancel",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface MatchmakingCancelOkResponse {
@@ -189,30 +164,15 @@ Server should send this when there are enough queued players to form a valid bat
             "type": "object",
             "properties": {
                 "queueId": { "type": "string" },
+                "playerCount": { "type": "integer" },
                 "timeoutMs": { "type": "integer" }
             },
-            "required": ["queueId", "timeoutMs"]
+            "required": ["queueId", "playerCount", "timeoutMs"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "voluptate ullamco",
-    "commandId": "matchmaking/found",
-    "data": {
-        "queueId": "voluptate ullamco",
-        "timeoutMs": -50000000
-    }
-}
 ```
 </details>
 
@@ -226,6 +186,7 @@ export interface MatchmakingFoundEvent {
 }
 export interface MatchmakingFoundEventData {
     queueId: string;
+    playerCount: number;
     timeoutMs: number;
 }
 ```
@@ -268,21 +229,6 @@ Server should send this when players ready up using [ready](#ready).
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "in exercitation",
-    "commandId": "matchmaking/foundUpdate",
-    "data": {
-        "readyCount": -48000000
-    }
-}
 ```
 </details>
 
@@ -331,18 +277,6 @@ Returns all available matchmaking playlists.
     "required": ["type", "messageId", "commandId"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "in nostrud",
-    "commandId": "matchmaking/list"
-}
 ```
 </details>
 
@@ -452,37 +386,6 @@ export interface MatchmakingListRequest {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "consequat quis",
-    "commandId": "matchmaking/list",
-    "status": "success",
-    "data": {
-        "playlists": [
-            {
-                "id": "1v1",
-                "name": "Duel",
-                "numOfTeams": 2,
-                "teamSize": 1,
-                "ranked": true
-            },
-            {
-                "id": "1v1v1",
-                "name": "3 Way FFA",
-                "numOfTeams": 3,
-                "teamSize": 1,
-                "ranked": true
-            }
-        ]
-    }
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface MatchmakingListOkResponse {
@@ -540,18 +443,6 @@ Sent when a found match gets disbanded because a client failed to ready up.
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "commodo laborum",
-    "commandId": "matchmaking/lost"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface MatchmakingLostEvent {
@@ -605,24 +496,6 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "nisi deserunt",
-    "commandId": "matchmaking/queue",
-    "data": {
-        "queues": [
-            "nisi deserunt",
-            "nisi deserunt"
-        ]
-    }
-}
 ```
 </details>
 
@@ -692,19 +565,6 @@ export interface MatchmakingQueueRequestData {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "nisi qui",
-    "commandId": "matchmaking/queue",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface MatchmakingQueueOkResponse {
@@ -758,21 +618,6 @@ Contains some info about the state of the current queue.
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "laboris non",
-    "commandId": "matchmaking/queueUpdate",
-    "data": {
-        "playersQueued": "laboris non"
-    }
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface MatchmakingQueueUpdateEvent {
@@ -818,18 +663,6 @@ Clients should send this when they are ready to proceed with the found match. If
     "required": ["type", "messageId", "commandId"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "ullamco occaecat",
-    "commandId": "matchmaking/ready"
-}
 ```
 </details>
 
@@ -893,19 +726,6 @@ export interface MatchmakingReadyRequest {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "reprehenderit Lorem",
-    "commandId": "matchmaking/ready",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface MatchmakingReadyOkResponse {
@@ -959,22 +779,6 @@ Sent when a client in a found match readies up.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "dolor Lorem",
-    "commandId": "matchmaking/readyUpdate",
-    "data": {
-        "readyMax": -30000000,
-        "readyCurrent": -30000000
-    }
-}
 ```
 </details>
 

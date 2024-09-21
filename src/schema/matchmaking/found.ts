@@ -10,6 +10,7 @@ export default defineEndpoint({
     event: {
         data: Type.Object({
             queueId: Type.String(),
+            playerCount: Type.Integer(),
             timeoutMs: Type.Integer(),
         }),
     },

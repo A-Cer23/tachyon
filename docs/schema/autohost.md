@@ -104,24 +104,6 @@ Request to kill a battle.
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "ipsum",
-    "commandId": "autohost/addPlayer",
-    "data": {
-        "battleId": "00000000-0000-0000-0000-000000000000",
-        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-        "name": "ipsum",
-        "password": "ipsum"
-    }
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export type UserId = string;
@@ -190,19 +172,6 @@ export interface AutohostAddPlayerRequestData {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "fugiat",
-    "commandId": "autohost/addPlayer",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface AutohostAddPlayerOkResponse {
@@ -256,22 +225,6 @@ Kick a player from a battle.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "ea",
-    "commandId": "autohost/kickPlayer",
-    "data": {
-        "battleId": "00000000-0000-0000-0000-000000000000",
-        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
-    }
-}
 ```
 </details>
 
@@ -341,19 +294,6 @@ export interface AutohostKickPlayerRequestData {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "quis",
-    "commandId": "autohost/kickPlayer",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface AutohostKickPlayerOkResponse {
@@ -406,21 +346,6 @@ Request to kill a battle.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "Ut",
-    "commandId": "autohost/kill",
-    "data": {
-        "battleId": "00000000-0000-0000-0000-000000000000"
-    }
-}
 ```
 </details>
 
@@ -487,19 +412,6 @@ export interface AutohostKillRequestData {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "dolore",
-    "commandId": "autohost/kill",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface AutohostKillOkResponse {
@@ -555,24 +467,6 @@ Mute a player in a battle.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "labore",
-    "commandId": "autohost/mutePlayer",
-    "data": {
-        "battleId": "11111111-1111-1111-1111-111111111111",
-        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-        "chat": false,
-        "draw": false
-    }
-}
 ```
 </details>
 
@@ -644,19 +538,6 @@ export interface AutohostMutePlayerRequestData {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "incididunt",
-    "commandId": "autohost/mutePlayer",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface AutohostMutePlayerOkResponse {
@@ -711,22 +592,6 @@ Send a custom command for the autohost to execute.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "tempor",
-    "commandId": "autohost/sendCommand",
-    "data": {
-        "battleId": "11111111-1111-1111-1111-111111111111",
-        "command": "tempor"
-    }
-}
 ```
 </details>
 
@@ -795,19 +660,6 @@ export interface AutohostSendCommandRequestData {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "eiusmod",
-    "commandId": "autohost/sendCommand",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface AutohostSendCommandOkResponse {
@@ -861,22 +713,6 @@ Send a message for the autohost to display to players.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "do",
-    "commandId": "autohost/sendMessage",
-    "data": {
-        "battleId": "11111111-1111-1111-1111-111111111111",
-        "message": "do"
-    }
-}
 ```
 </details>
 
@@ -944,19 +780,6 @@ export interface AutohostSendMessageRequestData {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "id",
-    "commandId": "autohost/sendMessage",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface AutohostSendMessageOkResponse {
@@ -1013,24 +836,6 @@ Force players to become spectators in a battle.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "sint",
-    "commandId": "autohost/specPlayers",
-    "data": {
-        "battleId": "22222222-2222-2222-2222-222222222222",
-        "userIds": [
-            "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
-        ]
-    }
-}
 ```
 </details>
 
@@ -1097,19 +902,6 @@ export interface AutohostSpecPlayersRequestData {
     ]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "nulla",
-    "commandId": "autohost/specPlayers",
-    "status": "success"
-}
 ```
 </details>
 
@@ -1219,42 +1011,6 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "dolor",
-    "commandId": "autohost/start",
-    "data": {
-        "battleId": "22222222-2222-2222-2222-222222222222",
-        "engineVersion": "99",
-        "gameName": "dolor",
-        "mapName": "dolor",
-        "startDelay": -70000000,
-        "startPosType": "fixed",
-        "allyTeams": [
-            {
-                "teams": [
-                    {
-                        "dolorb": -70000000,
-                        "startPos": {
-                            "x": -70000000,
-                            "y": -70000000
-                        }
-                    }
-                ]
-            }
-        ],
-        "restrictions": {
-            ".": 15000000
-        }
-    }
-}
 ```
 </details>
 
@@ -1416,25 +1172,6 @@ export interface StartBox {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "aute",
-    "commandId": "autohost/start",
-    "status": "success",
-    "data": {
-        "ips": [
-            "40.40.40.40"
-        ],
-        "port": 11345
-    }
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface AutohostStartOkResponse {
@@ -1496,22 +1233,6 @@ This event should be sent to the server on connection and whenever any of the st
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "nisi",
-    "commandId": "autohost/status",
-    "data": {
-        "maxBattles": 17000000,
-        "currentBattles": 17000000
-    }
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface AutohostStatusEvent {
@@ -1566,21 +1287,6 @@ Ask the autohost to send us updates about its battles.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "ullamco",
-    "commandId": "autohost/subscribeUpdates",
-    "data": {
-        "since": 1705432698000000
-    }
-}
 ```
 </details>
 
@@ -1646,19 +1352,6 @@ export interface AutohostSubscribeUpdatesRequestData {
     ]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "exercitation",
-    "commandId": "autohost/subscribeUpdates",
-    "status": "success"
-}
 ```
 </details>
 
@@ -1901,26 +1594,6 @@ Inform the server of battle updates.
     "required": ["type", "messageId", "commandId", "data"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "Ut velit",
-    "commandId": "autohost/update",
-    "data": {
-        "battleId": "33333333-3333-3333-3333-333333333333",
-        "time": 1705432698000000,
-        "update": {
-            "type": "engine_message",
-            "message": "Ut velit"
-        }
-    }
-}
 ```
 </details>
 

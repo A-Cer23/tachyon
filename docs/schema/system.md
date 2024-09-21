@@ -46,21 +46,6 @@ Ask the server to terminate the connection.
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "Duis Lorem",
-    "commandId": "system/disconnect",
-    "data": {
-        "reason": "Duis Lorem"
-    }
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface SystemDisconnectRequest {
@@ -124,19 +109,6 @@ export interface SystemDisconnectRequestData {
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "consequat Lorem",
-    "commandId": "system/disconnect",
-    "status": "success"
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface SystemDisconnectOkResponse {
@@ -181,18 +153,6 @@ Get server stats such as user count.
     "required": ["type", "messageId", "commandId"]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "commodo Lorem",
-    "commandId": "system/serverStats"
-}
 ```
 </details>
 
@@ -258,22 +218,6 @@ export interface SystemServerStatsRequest {
     ]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "ut Lorem",
-    "commandId": "system/serverStats",
-    "status": "success",
-    "data": {
-        "userCount": -22000000
-    }
-}
 ```
 </details>
 

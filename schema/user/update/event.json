@@ -14,88 +14,51 @@
         "commandId": { "const": "user/update" },
         "data": {
             "title": "UserUpdateEventData",
-            "anyOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "self": {
-                            "type": "object",
-                            "allOf": [
-                                { "type": "object", "properties": {} },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "friendIds": {
-                                            "type": "array",
-                                            "items": { "type": "string" }
-                                        },
-                                        "outgoingFriendRequestIds": {
-                                            "type": "array",
-                                            "items": { "type": "string" }
-                                        },
-                                        "incomingFriendRequestIds": {
-                                            "type": "array",
-                                            "items": { "type": "string" }
-                                        },
-                                        "ignoreIds": {
-                                            "type": "array",
-                                            "items": { "type": "string" }
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "required": ["self"]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "users": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "$ref": "../../definitions/userId.json"
-                                    },
-                                    "username": { "type": "string" },
-                                    "displayName": { "type": "string" },
-                                    "clanId": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "partyId": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "scopes": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "countryCode": { "type": "string" },
-                                    "status": {
-                                        "anyOf": [
-                                            { "const": "offline" },
-                                            { "const": "menu" },
-                                            { "const": "playing" },
-                                            { "const": "lobby" }
-                                        ]
-                                    },
-                                    "battleStatus": {
-                                        "$ref": "../../definitions/battleStatus.json"
-                                    }
-                                }
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
+                            "username": { "type": "string" },
+                            "displayName": { "type": "string" },
+                            "clanId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
+                            },
+                            "partyId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
+                            },
+                            "scopes": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            },
+                            "countryCode": { "type": "string" },
+                            "status": {
+                                "anyOf": [
+                                    { "const": "offline" },
+                                    { "const": "menu" },
+                                    { "const": "playing" },
+                                    { "const": "lobby" }
+                                ]
+                            },
+                            "battleStatus": {
+                                "$ref": "../../definitions/battleStatus.json"
                             }
                         }
-                    },
-                    "required": ["users"]
+                    }
                 }
-            ]
+            },
+            "required": ["users"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

@@ -35,12 +35,18 @@ export async function generateJs(tachyonConfig: TachyonConfig) {
 
     process.stdout.write("Build bundle...\n");
     await generateTempIndex(tachyonConfig);
+
+    // clear typings, for some reason tsup has trouble overwriting existing ones
+    // but also causes a bug with linked npm modules causing other projects to forget the link...
+    // await fs.rm("dist/types.d.ts", { force: true });
+    // await fs.rm("dist/types.d.mts", { force: true });
+
     await tsupBuild({
         entry: {
             index: "dist/index.ts",
             types: "dist/types.ts",
         },
-        bundle: true,
+        bundle: false,
         outDir: "dist",
         dts: true,
         format: ["cjs", "esm"],

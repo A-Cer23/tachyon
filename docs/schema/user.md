@@ -39,7 +39,7 @@ Contains the full state of users that the client has just subscribed to. This ev
             "properties": {
                 "users": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/privateUser.json" }
+                    "items": { "$ref": "../../definitions/user.json" }
                 }
             },
             "required": ["users"]
@@ -51,150 +51,27 @@ Contains the full state of users that the client has just subscribed to. This ev
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "occaecat Lorem in",
-    "commandId": "user/add",
-    "data": {
-        "users": [
-            {
-                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "occaecat Lorem in",
-                "displayName": "occaecat Lorem in",
-                "clanId": "occaecat Lorem in",
-                "partyId": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
-                "status": "menu",
-                "battleStatus": {
-                    "battleId": "occaecat Lorem in",
-                    "isSpectator": true,
-                    "name": "occaecat Lorem in",
-                    "rank": -20000000,
-                    "countryCode": "occaecat Lorem in"
-                },
-                "friendIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "incomingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "ignoreIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ]
-            },
-            {
-                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "occaecat Lorem in",
-                "displayName": "occaecat Lorem in",
-                "clanId": "occaecat Lorem in",
-                "partyId": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
-                "status": "menu",
-                "battleStatus": {
-                    "battleId": "occaecat Lorem in",
-                    "isSpectator": true,
-                    "userId": {},
-                    "name": "occaecat Lorem in",
-                    "rank": -20000000,
-                    "countryCode": "occaecat Lorem in"
-                },
-                "friendIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "incomingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "ignoreIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ]
-            },
-            {
-                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "occaecat Lorem in",
-                "displayName": "occaecat Lorem in",
-                "clanId": "occaecat Lorem in",
-                "partyId": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
-                "status": "menu",
-                "battleStatus": {
-                    "battleId": "occaecat Lorem in",
-                    "isSpectator": true,
-                    "userId": {},
-                    "name": "occaecat Lorem in",
-                    "rank": -20000000,
-                    "countryCode": "occaecat Lorem in"
-                },
-                "friendIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "incomingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "ignoreIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ]
-            }
-        ]
-    }
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
-export type PrivateUser = {
+export type UserId = string;
+export type BattleStatus =
+    | ({
+          battleId: string;
+      } & ({
+          isSpectator: boolean;
+      } & Player))
+    | null;
+
+export interface UserAddEvent {
+    type: "event";
+    messageId: string;
+    commandId: "user/add";
+    data: UserAddEventData;
+}
+export interface UserAddEventData {
+    users: User[];
+}
+export interface User {
     userId: UserId;
     username: string;
     displayName: string;
@@ -204,50 +81,17 @@ export type PrivateUser = {
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     battleStatus: BattleStatus;
-} & {
-    friendIds: string[];
-    outgoingFriendRequestIds: string[];
-    incomingFriendRequestIds: string[];
-    ignoreIds: string[];
-};
-export type UserId = string;
-export type BattleStatus =
-    | ({
-          battleId: string;
-      } & (
-          | ({
-                isSpectator: true;
-            } & {
-                userId: UserId;
-                name: string;
-                rank: number;
-                countryCode: string;
-            })
-          | ({
-                isSpectator: false;
-            } & Player)
-      ))
-    | null;
-export type Player = Spectator & {
-    customOptions?: {
-        [k: string]: string;
-    };
-};
-
-export interface UserAddEvent {
-    type: "event";
-    messageId: string;
-    commandId: "user/add";
-    data: UserAddEventData;
 }
-export interface UserAddEventData {
-    users: PrivateUser[];
-}
-export interface Spectator {
+export interface Player {
     userId: UserId;
     name: string;
-    rank: number;
-    countryCode: string;
+    password: string;
+    rank?: number;
+    countryCode?: string;
+    customProperties?: CustomStartScriptProperties;
+}
+export interface CustomStartScriptProperties {
+    [k: string]: string;
 }
 ```
 ---
@@ -287,30 +131,41 @@ Sent by the server to inform the client when subscribed users get updated in som
                     "type": "array",
                     "items": {
                         "type": "object",
-                        "allOf": [
-                            { "type": "object", "properties": {} },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "friendIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "outgoingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "incomingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "ignoreIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    }
-                                }
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
+                            "username": { "type": "string" },
+                            "displayName": { "type": "string" },
+                            "clanId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
+                            },
+                            "partyId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
+                            },
+                            "scopes": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            },
+                            "countryCode": { "type": "string" },
+                            "status": {
+                                "anyOf": [
+                                    { "const": "offline" },
+                                    { "const": "menu" },
+                                    { "const": "playing" },
+                                    { "const": "lobby" }
+                                ]
+                            },
+                            "battleStatus": {
+                                "$ref": "../../definitions/battleStatus.json"
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -323,75 +178,17 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "pariatur Lorem reprehenderit",
-    "commandId": "user/update",
-    "data": {
-        "users": [
-            {
-                "friendIds": [
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit"
-                ],
-                "incomingFriendRequestIds": [
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit"
-                ],
-                "ignoreIds": [
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit"
-                ]
-            },
-            {
-                "friendIds": [
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit"
-                ],
-                "incomingFriendRequestIds": [
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit"
-                ],
-                "ignoreIds": [
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit"
-                ]
-            },
-            {
-                "friendIds": [
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit"
-                ],
-                "incomingFriendRequestIds": [
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit"
-                ],
-                "ignoreIds": [
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit",
-                    "pariatur Lorem reprehenderit"
-                ]
-            }
-        ]
-    }
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
+export type UserId = string;
+export type BattleStatus =
+    | ({
+          battleId: string;
+      } & ({
+          isSpectator: boolean;
+      } & Player))
+    | null;
+
 export interface UserUpdateEvent {
     type: "event";
     messageId: string;
@@ -399,11 +196,27 @@ export interface UserUpdateEvent {
     data: UserUpdateEventData;
 }
 export interface UserUpdateEventData {
-    users: ({} & {
-        friendIds?: string[];
-        outgoingFriendRequestIds?: string[];
-        incomingFriendRequestIds?: string[];
-        ignoreIds?: string[];
-    })[];
+    users: {
+        userId?: UserId;
+        username?: string;
+        displayName?: string;
+        clanId?: string | null;
+        partyId?: string | null;
+        scopes?: string[];
+        countryCode?: string;
+        status?: "offline" | "menu" | "playing" | "lobby";
+        battleStatus?: BattleStatus;
+    }[];
+}
+export interface Player {
+    userId: UserId;
+    name: string;
+    password: string;
+    rank?: number;
+    countryCode?: string;
+    customProperties?: CustomStartScriptProperties;
+}
+export interface CustomStartScriptProperties {
+    [k: string]: string;
 }
 ```

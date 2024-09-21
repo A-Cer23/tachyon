@@ -1376,9 +1376,10 @@
                     "type": "object",
                     "properties": {
                         "queueId": { "type": "string" },
+                        "playerCount": { "type": "integer" },
                         "timeoutMs": { "type": "integer" }
                     },
-                    "required": ["queueId", "timeoutMs"]
+                    "required": ["queueId", "playerCount", "timeoutMs"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -1720,6 +1721,78 @@
             "required": ["type", "messageId", "commandId", "data"]
         },
         {
+            "title": "PrivateUserAddEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "privateUser/add" },
+                "data": {
+                    "title": "PrivateUserAddEventData",
+                    "type": "object",
+                    "properties": {
+                        "user": { "$ref": "#/definitions/privateUser" }
+                    },
+                    "required": ["user"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "PrivateUserUpdateEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "privateUser/update" },
+                "data": {
+                    "title": "PrivateUserUpdateEventData",
+                    "type": "object",
+                    "properties": {
+                        "user": {
+                            "type": "object",
+                            "allOf": [
+                                { "type": "object", "properties": {} },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "friendIds": {
+                                            "type": "array",
+                                            "items": { "type": "string" }
+                                        },
+                                        "outgoingFriendRequestIds": {
+                                            "type": "array",
+                                            "items": { "type": "string" }
+                                        },
+                                        "incomingFriendRequestIds": {
+                                            "type": "array",
+                                            "items": { "type": "string" }
+                                        },
+                                        "ignoreIds": {
+                                            "type": "array",
+                                            "items": { "type": "string" }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "required": ["user"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
             "title": "SystemDisconnectRequest",
             "tachyon": {
                 "source": "user",
@@ -1877,25 +1950,14 @@
                 "commandId": { "const": "user/add" },
                 "data": {
                     "title": "UserAddEventData",
-                    "anyOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "self": { "$ref": "#/definitions/privateUser" }
-                            },
-                            "required": ["self"]
-                        },
-                        {
-                            "type": "object",
-                            "properties": {
-                                "users": {
-                                    "type": "array",
-                                    "items": { "$ref": "#/definitions/user" }
-                                }
-                            },
-                            "required": ["users"]
+                    "type": "object",
+                    "properties": {
+                        "users": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/user" }
                         }
-                    ]
+                    },
+                    "required": ["users"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -1914,96 +1976,51 @@
                 "commandId": { "const": "user/update" },
                 "data": {
                     "title": "UserUpdateEventData",
-                    "anyOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "self": {
-                                    "type": "object",
-                                    "allOf": [
-                                        { "type": "object", "properties": {} },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "friendIds": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "outgoingFriendRequestIds": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "incomingFriendRequestIds": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "ignoreIds": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            "required": ["self"]
-                        },
-                        {
-                            "type": "object",
-                            "properties": {
-                                "users": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "userId": {
-                                                "$ref": "#/definitions/userId"
-                                            },
-                                            "username": { "type": "string" },
-                                            "displayName": { "type": "string" },
-                                            "clanId": {
-                                                "anyOf": [
-                                                    { "type": "string" },
-                                                    { "type": "null" }
-                                                ]
-                                            },
-                                            "partyId": {
-                                                "anyOf": [
-                                                    { "type": "string" },
-                                                    { "type": "null" }
-                                                ]
-                                            },
-                                            "scopes": {
-                                                "type": "array",
-                                                "items": { "type": "string" }
-                                            },
-                                            "countryCode": { "type": "string" },
-                                            "status": {
-                                                "anyOf": [
-                                                    { "const": "offline" },
-                                                    { "const": "menu" },
-                                                    { "const": "playing" },
-                                                    { "const": "lobby" }
-                                                ]
-                                            },
-                                            "battleStatus": {
-                                                "$ref": "#/definitions/battleStatus"
-                                            }
-                                        }
+                    "type": "object",
+                    "properties": {
+                        "users": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "username": { "type": "string" },
+                                    "displayName": { "type": "string" },
+                                    "clanId": {
+                                        "anyOf": [
+                                            { "type": "string" },
+                                            { "type": "null" }
+                                        ]
+                                    },
+                                    "partyId": {
+                                        "anyOf": [
+                                            { "type": "string" },
+                                            { "type": "null" }
+                                        ]
+                                    },
+                                    "scopes": {
+                                        "type": "array",
+                                        "items": { "type": "string" }
+                                    },
+                                    "countryCode": { "type": "string" },
+                                    "status": {
+                                        "anyOf": [
+                                            { "const": "offline" },
+                                            { "const": "menu" },
+                                            { "const": "playing" },
+                                            { "const": "lobby" }
+                                        ]
+                                    },
+                                    "battleStatus": {
+                                        "$ref": "#/definitions/battleStatus"
                                     }
                                 }
-                            },
-                            "required": ["users"]
+                            }
                         }
-                    ]
+                    },
+                    "required": ["users"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

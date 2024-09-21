@@ -50,24 +50,6 @@ When a user client receives this response it should launch the game (spring.exe)
 ```
 </details>
 
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "Ut in",
-    "commandId": "battle/start",
-    "data": {
-        "username": "Ut in",
-        "password": "Ut in",
-        "ip": "Ut in",
-        "port": -57999999.99999999
-    }
-}
-```
-</details>
-
 #### TypeScript Definition
 ```ts
 export interface BattleStartRequest {
@@ -131,19 +113,6 @@ export interface BattleStartRequestData {
     ]
 }
 
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "aliqua in",
-    "commandId": "battle/start",
-    "status": "success"
-}
 ```
 </details>
 

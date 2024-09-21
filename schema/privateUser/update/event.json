@@ -1,0 +1,51 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/privateUser/update/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "PrivateUserUpdateEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "privateUser/update" },
+        "data": {
+            "title": "PrivateUserUpdateEventData",
+            "type": "object",
+            "properties": {
+                "user": {
+                    "type": "object",
+                    "allOf": [
+                        { "type": "object", "properties": {} },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "friendIds": {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                },
+                                "outgoingFriendRequestIds": {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                },
+                                "incomingFriendRequestIds": {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                },
+                                "ignoreIds": {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": ["user"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
